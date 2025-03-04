@@ -1,6 +1,9 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import ClientContext from "@/components/ClientContext";
 import "./globals.css";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,10 +27,52 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script id="loading-script" strategy="beforeInteractive">
+          {`
+            (function() {
+              // Create loading element
+              document.addEventListener('DOMContentLoaded', function() {
+                const hasLoaded = sessionStorage.getItem('hasCompletedInitialLoad');
+                
+                if (!hasLoaded) {
+                  // First load - show loading screen
+                  const loadingScreen = document.createElement('div');
+                  loadingScreen.id = 'app-loading-screen';
+                  loadingScreen.style.position = 'fixed';
+                  loadingScreen.style.top = '0';
+                  loadingScreen.style.left = '0';
+                  loadingScreen.style.width = '100%';
+                  loadingScreen.style.height = '100%';
+                  loadingScreen.style.backgroundColor = 'white';
+                  loadingScreen.style.display = 'flex';
+                  loadingScreen.style.alignItems = 'center';
+                  loadingScreen.style.justifyContent = 'center';
+                  loadingScreen.style.zIndex = '9999';
+                  loadingScreen.innerText = 'Loading...';
+                  document.body.appendChild(loadingScreen);
+                  
+                  // Remove after delay
+                  setTimeout(() => {
+                    loadingScreen.style.opacity = '0';
+                    loadingScreen.style.transition = 'opacity 0.5s';
+                    setTimeout(() => {
+                      loadingScreen.remove();
+                      sessionStorage.setItem('hasCompletedInitialLoad', 'true');
+                    }, 500);
+                  }, 2000);
+                }
+              });
+            })();
+          `}
+        </Script>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ClientContext>
+          {children}
+        </ClientContext>
       </body>
     </html>
   );

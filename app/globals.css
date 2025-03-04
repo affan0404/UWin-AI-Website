@@ -22,3 +22,137 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Subtle dot pattern background */
+.bg-dot-pattern {
+  background-image: radial-gradient(circle, rgba(59, 130, 246, 0.2) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Animation keyframes */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+@keyframes dash {
+  0% { stroke-dashoffset: 20; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes widthIn {
+  from { width: 0; }
+  to { width: 100px; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { 
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to { 
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animation classes */
+.animate-pulse {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.animate-dash {
+  stroke-dasharray: 3, 3;
+  animation: dash 2s linear infinite;
+}
+
+.animate-widthIn {
+  animation: widthIn 1s forwards;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.7s forwards;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.5s forwards;
+}
+
+/* Animation delays */
+.nodes circle:nth-child(odd) {
+  animation-delay: 0.2s;
+}
+
+.nodes circle:nth-child(even) {
+  animation-delay: 0.5s;
+}
+
+.connections line:nth-child(3n) {
+  animation-delay: 0.5s;
+}
+
+.connections line:nth-child(3n+1) {
+  animation-delay: 0.3s;
+}
+
+/* Wave animations for SVG paths */
+@keyframes wave-animation-1 {
+  0% {
+    transform: translateX(-15px) translateY(0);
+  }
+  50% {
+    transform: translateX(10px) translateY(-5px);
+  }
+  100% {
+    transform: translateX(20px) translateY(3px);
+  }
+}
+
+@keyframes wave-animation-2 {
+  0% {
+    transform: translateX(10px) translateY(3px);
+  }
+  50% {
+    transform: translateX(-8px) translateY(-3px);
+  }
+  100% {
+    transform: translateX(-15px) translateY(5px);
+  }
+}
+
+@keyframes wave-animation-3 {
+  0% {
+    transform: translateX(0) translateY(-4px);
+  }
+  50% {
+    transform: translateX(12px) translateY(0);
+  }
+  100% {
+    transform: translateX(-10px) translateY(4px);
+  }
+}
+
+/* Apply animations to SVG wave paths */
+.wave1 {
+  animation: wave-animation-1 18s ease-in-out infinite alternate;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.wave2 {
+  animation: wave-animation-2 12s ease-in-out infinite alternate-reverse;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.wave3 {
+  animation: wave-animation-3 15s ease-in-out infinite alternate;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
